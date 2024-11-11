@@ -1,0 +1,52 @@
+{
+  "characters": [
+    {
+      "name": "KingBeam",
+      "health": 120,
+      "defense": 10,
+      "moves": [
+        {
+          "name": "Kablamo",
+          "damage": 70,
+          "cooldown": 3,
+          ,
+        },
+        {
+            "name": "Henny Blast",
+            "damage": 25,
+            "cooldown": 1,
+        },
+        {
+          "name": "Shield Block",
+          "damage": 0,
+          "cooldown": 3,
+          "effect": "reduce incoming damage by 50%"
+        }
+      ]
+    },
+    {
+      "name": "Stuart",
+      "health": 75,
+      "defense": 5,
+      "moves": [
+        {
+          "name": "Wipeout",
+          "damage": 55,
+          "cooldown": 2,
+        },
+        {
+            "name": "The Mock",
+            "damage": 20,
+            "cooldown": 1,
+          },
+        {
+          "name": "Deception",
+          "damage": 0,
+          "cooldown": 5,
+          "chance": 0.8,
+          "effect": "dodge next attack"
+        }
+      ]
+    }
+  ]
+}
