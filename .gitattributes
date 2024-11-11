@@ -1,2 +1,24 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+
+class Computer:
+    def __init__(self, health):
+        self.health = health
+        self.defensive_options = ["block", "counter", "dodge"]
+    
+    def defense(self, player_move):
+        """Chooses a defense based on player's move"""
+        # Add logic to react defensively depending on the player move
+        if player_move == "high punch":
+            return random.choice(["block", "dodge"])
+        elif player_move == "mid punch":
+            return random.choice(["block", "dodge"])
+        if player_move == "low punch":
+            return random.choice(["block", "dodge"])
+        elif player_move == "kick":
+            return "block" if random.random() > 0.3 else "counter"
+        elif player_move == "special":
+            return "dodge"
+        else:
+            return "block" 
