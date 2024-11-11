@@ -9,15 +9,13 @@ class Computer:
     
     def defense(self, player_move):
         """Chooses a defense based on player's move"""
-        if player_move == "high punch":
-            return random.choice(["block", "dodge"])
-        elif player_move == "mid punch":
-            return random.choice(["block", "dodge"])
-        if player_move == "low punch":
-            return random.choice(["block", "dodge"])
-        elif player_move == "kick":
-            return "block" if random.random() > 0.3 else "counter"
-        elif player_move == "special":
-            return "dodge"
+        if player_move == "punch":
+            return random.choice(["dodge", "counter"])
+        elif player_move == "leg sweep":
+            return random.choice(["block", "counter"])
+        elif player_move == "special move 1":
+            return random.choice(["block", "counter"])
+        elif player_move == "special move 2":
+            return random.choice(["block", "counter"])
         else:
-            return "block" 
+            return random.choice(self.defensive_options)
