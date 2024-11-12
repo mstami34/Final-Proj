@@ -1,7 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-class Player():
+class Player:
     def __init__(self, name, health):
         self.health = health
         self.name = name
