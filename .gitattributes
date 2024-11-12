@@ -1,6 +1,25 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+class Player():
+    def __init__(self, name, health):
+        self.health = health
+        self.name = name
+        self.wins = 0
+
+    def attacking_damage(self, damage_amount, attacking):
+        if (damage_amount > self.health):
+            death = abs(self.health - damage_amount)
+            self.health = 0
+            if (death > 0):
+                print("{0} has been defeated by {1}!"
+                      .format(self.name.capitalize(), attacking))
+        else:
+            self.health -= damage_amount
+            print("{0} takes {1} damage from {2}!"
+                  .format(self.name.capitalize(), damage_amount, attacking))
+    
+
 
 class Computer:
     def __init__(self, health):
