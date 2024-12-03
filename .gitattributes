@@ -24,7 +24,7 @@ def load_characters_from_file(Characters):
         for line in lines:
             line = line.strip()
             if line.startswith("Name:"):
-                if name:  # Save previous character if available
+                if name:  
                     characters.append(Character(name, health, defense))
                 name = line.split(":")[1].strip()
             elif line.startswith("health:"):
