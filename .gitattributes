@@ -101,41 +101,7 @@ class Player:
         self.wins = 0
         self.defense = defense
 
-    def __repr__(self):
-        return f"Character(name={self.name}, health={self.health}, defense={self.defense})"
 
-def load_characters_from_file(Characters):
-    characters = []
-    
-    with open(Characters, 'r') as file:
-        lines = file.readlines()
-        
-        
-        name = health = defense = None
-        
-        for line in lines:
-            line = line.strip()
-            if line.startswith("Name:"):
-                if name:  
-                    characters.append(Character(name, health, defense))
-                name = line.split(":")[1].strip()
-            elif line.startswith("health:"):
-                age = int(line.split(":")[1].strip())
-            elif line.startswith("defense:"):
-                char_class = line.split(":")[1].strip()
-        
-        
-        if name:
-            characters.append(Character(name, health, defense))
-    
-    return characters
-
-
-characters = load_characters_from_file("characters.json")
-
-
-for character in characters:
-    print(character)
 
     def attacking_damage(self, damage_amount, attacking):
         if (damage_amount > self.health):
