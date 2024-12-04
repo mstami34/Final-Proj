@@ -1,3 +1,6 @@
+import random
+import json
+
 # Auto detect text files and perform LF normalization
 * text=auto
 
@@ -13,68 +16,77 @@ class Game:
         print("Available characters:")
         for idx, char in enumerate(self.characters):
             print(f"{idx + 1}. {char['name']} (Health: {char['health']}, Defense: {char['defense']})")
-        choice = int(input("Choose your character (1/2/3): ")) - 1
+        while True:
+            try:
+                choice = int(input("Choose your character (1/2/3): ")) - 1
+                if 0 <= choice < len(self.characters):
+                    break
+                else:
+                    print("Invalid choice. Please select a valid number.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
         self.player = self.characters[choice]
         self.cpu = random.choice([char for idx, char in enumerate(self.characters) if idx != choice])
         print(f"You chose {self.player['name']}. CPU chose {self.cpu['name']}.")
 
     def reset_cooldowns(self):
-        """Initialize or reset cooldowns for all moves."""
         for char in [self.player, self.cpu]:
-            self.cooldowns[char["name"]] = {move: 0 for move in char["player_moves"]}
+            self.cooldowns[char["name"]] = {list(move.keys())[0]: 0 for move in char["player_moves"]}
 
     def show_moves(self, char):
-        """Display available moves."""
         print(f"\n{char['name']}'s moves:")
         for idx, move in enumerate(char["player_moves"]):
             move_name = list(move.keys())[0]
-            cooldown = self.cooldowns[char["name"]][move]
+            cooldown = self.cooldowns[char["name"]][move_name]
             print(f"{idx + 1}. {move_name} (Cooldown: {cooldown})")
 
     def apply_move(self, attacker, defender, move_key):
-        """Apply the selected move."""
         move = attacker["player_moves"][move_key]
         move_name = list(move.keys())[0]
 
-        if self.cooldowns[attacker["name"]][move] > 0:
+        if self.cooldowns[attacker["name"]][move_name] > 0:
             print(f"{move_name} is on cooldown!")
             return False
 
         damage = move["damage"] - defender["defense"]
-        damage = max(damage, 0)  # Ensure damage is not negative
+        damage = max(damage, 0)
         defender["health"] -= damage
         print(f"{attacker['name']} used {move_name}! It dealt {damage} damage.")
-        self.cooldowns[attacker["name"]][move] = move["cooldown"]
+        self.cooldowns[attacker["name"]][move_name] = move["cooldown"]
 
-        # Apply effects if the move has any
         if "effect" in move:
             print(f"Effect applied: {move['effect']}")
 
         return True
 
     def take_turn(self, attacker, defender):
-        """Handle a single turn."""
         if attacker == self.player:
             self.show_moves(attacker)
-            move_idx = int(input(f"Choose a move for {attacker['name']} (1-{len(attacker['player_moves'])}): ")) - 1
+            while True:
+                try:
+                    move_idx = int(input(f"Choose a move for {attacker['name']} (1-{len(attacker['player_moves'])}): ")) - 1
+                    if 0 <= move_idx < len(attacker["player_moves"]):
+                        break
+                    else:
+                        print("Invalid move. Try again.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
         else:
             move_idx = random.choice(range(len(attacker["player_moves"])))
 
         self.apply_move(attacker, defender, move_idx)
 
     def reduce_cooldowns(self):
-        """Reduce all cooldowns by 1 (if greater than 0)."""
         for char in [self.player, self.cpu]:
             for move in self.cooldowns[char["name"]]:
                 if self.cooldowns[char["name"]][move] > 0:
                     self.cooldowns[char["name"]][move] -= 1
 
     def play(self):
-        """Main game loop."""
         self.choose_character()
         self.reset_cooldowns()
 
-        turn = 0  # 0 for player, 1 for CPU
+        turn = 0
         while self.player["health"] > 0 and self.cpu["health"] > 0:
             print(f"\n{self.player['name']} Health: {self.player['health']}")
             print(f"{self.cpu['name']} Health: {self.cpu['health']}\n")
@@ -86,12 +98,16 @@ class Game:
                 self.take_turn(self.cpu, self.player)
 
             self.reduce_cooldowns()
-            turn = 1 - turn  # Switch turns
+            turn = 1 - turn
 
         if self.player["health"] <= 0:
             print("You lost! CPU wins.")
         else:
             print("You won! CPU is defeated.")
+
+game = Game("Characters.json")
+game.play()
+
 
 
 class Player:
