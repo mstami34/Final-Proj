@@ -2,48 +2,69 @@
   "characters": [
     {
       "name": "KingBeam",
-      "health": 120,
+      "health": 200,
       "defense": 10,
-      "moves": [
+      "player_moves": [
         {
-          "name": "Kablamo",
-          "damage": 70,
-          "cooldown": 3,
-          ,
+        "Kablamo": "special move 1",
+        "damage": 70,
+        "cooldown": 3
         },
         {
-            "name": "Henny Blast",
-            "damage": 25,
-            "cooldown": 1,
+          "Henny Blast": "special move 2",
+          "damage": 25,
+          "cooldown": 1
         },
         {
-          "name": "Shield Block",
+          "Shield Block": "block",
           "damage": 0,
           "cooldown": 3,
-          "effect": "reduce incoming damage by 50%"
+          "effect": "blocks next attack"
         }
       ]
     },
     {
       "name": "Stuart",
-      "health": 75,
+      "health": 175,
       "defense": 5,
-      "moves": [
+      "player_moves": [
         {
-          "name": "Wipeout",
+          "Wipeout": "special move 1",
           "damage": 55,
-          "cooldown": 2,
+          "cooldown": 2
         },
         {
-            "name": "The Mock",
+            "The Mock": "special move 2",
             "damage": 20,
-            "cooldown": 1,
+            "cooldown": 1
           },
         {
-          "name": "Deception",
+          "Deception": "dodge",
           "damage": 0,
           "cooldown": 5,
-          "chance": 0.8,
+          "effect": "dodge next attack"
+        }
+      ]
+    },
+    {
+      "name": "Phantom",
+      "health": 100,
+      "defense": 5,
+      "player_moves": [
+        {
+          "Scare": "special move 1",
+          "damage": 100,
+          "cooldown": 2
+        },
+        {
+            "Spook": "special move 2",
+            "damage": 50,
+            "cooldown": 1
+          },
+        {
+          "Phase": "dodge",
+          "damage": 0,
+          "cooldown": 5,
           "effect": "dodge next attack"
         }
       ]
