@@ -2,9 +2,6 @@ import random
 import json
 import argparse
 
-# Auto detect text files and perform LF normalization
-* text=auto
-
 class Game:
     """
     Represents a fighting game between a player and a CPU opponent.
@@ -189,37 +186,34 @@ class Game:
                 if self.cooldowns[char["name"]][move] > 0:
                     self.cooldowns[char["name"]][move] -= 1
 
+    def play(self):
+        """
+        Runs the main game loop, alternating turns between the player and the CPU.
 
-def main():
-    """
-    Main function to run the game.
+        Side-effects:
+            - Prints turn information, character health, and outcomes to the console.
+        """
+        self.choose_character()
+        self.reset_cooldowns()
 
-    Side-effects:
-        - Initializes and plays the game.
-        - Prints health, turn information, and outcomes to the console.
-    """
-    game = Game("Characters.json")
-    game.choose_character()
-    game.reset_cooldowns()
+        turn = 0
+        while self.player["health"] > 0 and self.cpu["health"] > 0:
+            print(f"\n{self.player['name']} Health: {self.player['health']}")
+            print(f"{self.cpu['name']} Health: {self.cpu['health']}\n")
+            if turn == 0:
+                print("Your turn!")
+                self.take_turn(self.player, self.cpu)
+            else:
+                print("CPU's turn!")
+                self.take_turn(self.cpu, self.player)
 
-    turn = 0
-    while game.player["health"] > 0 and game.cpu["health"] > 0:
-        print(f"\n{game.player['name']} Health: {game.player['health']}")
-        print(f"{game.cpu['name']} Health: {game.cpu['health']}\n")
-        if turn == 0:
-            print("Your turn!")
-            game.take_turn(game.player, game.cpu)
+            self.reduce_cooldowns()
+            turn = 1 - turn
+
+        if self < self.cpu:
+            print("You lost! CPU wins.")
         else:
-            print("CPU's turn!")
-            game.take_turn(game.cpu, game.player)
-
-        game.reduce_cooldowns()
-        turn = 1 - turn
-
-    if game < game.cpu:
-        print("You lost! CPU wins.")
-    else:
-        print("You won! CPU is defeated.")
+            print("You won! CPU is defeated.")
 
 
 def parse_arguments():
@@ -233,3 +227,4 @@ if __name__ == "__main__":
     args = parse_arguments()
     game = Game(args.file)
     game.play()
+    
